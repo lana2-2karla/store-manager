@@ -14,7 +14,6 @@ const getByIdProducts = (id) => {
 const getByNameProducts = async (name) => {
     const [productFilterName] = await connection
     .execute('SELECT * FROM StoreManager.products WHERE name = ?', [name]);
-    console.log(productFilterName);
     return productFilterName;
 };
 
@@ -38,10 +37,15 @@ const updateProducts = async (name, quantity, id) => {
     return rows.affectedRows;
 };
 
+const deleteProducts = async (id) => {
+    connection.execute('DELETE FROM StoreManager.products WHERE id = ?', [id]);
+};
+
 module.exports = {
     getAllProducts,
     getByIdProducts,
     addProducts,
     getByNameProducts,
     updateProducts,
+    deleteProducts,
 };
