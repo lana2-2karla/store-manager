@@ -16,7 +16,17 @@ const getNewProduct = async (name, quantity) => {
    return newProduct;
 };
 
+const updateProductService = async (name, quantity, id) => {
+    const rows = await productsModel.getByNameProducts(name);
+    if (rows.length !== 0) {
+       return null;
+    }
+    const updateProduct = await productsModel.updateProducts(name, quantity, id);
+    return updateProduct;
+};
+
 module.exports = {
     getAllProducts,
     getNewProduct,
+    updateProductService,
 };
