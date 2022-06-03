@@ -27,8 +27,18 @@ const updateSalesService = async (id, sales) => {
     };
 };
 
+const deleteSalesService = async (id) => {
+    const [rows] = await salesModel.getByIdSales(id);
+    if (rows.length !== 0) {
+      await salesModel.deleteSales(id);
+      await salesModel.deleteSalesProducts(id);
+      return true;
+    }
+};
+
 module.exports = {
     getAllSalesService,
     getNewSalesService,
     updateSalesService,
+    deleteSalesService,
 };
