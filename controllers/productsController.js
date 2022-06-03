@@ -41,7 +41,6 @@ router.delete('/products/:id', async (req, res) => {
     const { id } = req.params;
     const isDeleted = await productsService.deleteProductService(id);
     if (isDeleted) return res.status(204).end();
-    return res.status(404).json({ message: "Product not found" });
-
+    return res.status(404).json({ message: 'Product not found' });
 });
  module.exports = router;
