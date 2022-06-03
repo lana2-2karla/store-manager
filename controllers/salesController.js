@@ -30,4 +30,11 @@ router.put('/sales/:id', async (req, res) => {
     return res.status(200).json(updateSalesProducts);
 });
 
+router.delete('/sales/:id', async (req, res) => {
+    const { id } = req.params;
+    const isDeleted = await salesService.deleteSalesService(id);
+    if (isDeleted) return res.status(204).end();
+    return res.status(404).json({ message: 'Sale not found' });
+});
+
 module.exports = router;
