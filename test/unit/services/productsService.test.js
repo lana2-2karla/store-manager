@@ -136,5 +136,106 @@ describe('Busca todos os produtos no banco de dados', () => {
     });
   })
 })
+
+describe('Insere um produto no banco de dados',() => {
+
+  const name = "Example Product A";
+  const quantity = 6;
+
+  describe('Quando é inserido com sucesso', () => {
+    beforeEach(() => {
+      const result = [];
+      const resultExecute = [[{id: 1, name: "Example Product A", quantity: 6}]];
+      sinon.stub(productsModel, 'getByNameProducts').resolves(result);
+      sinon.stub(productsModel, 'addProducts').resolves(resultExecute);
+    });
+  
+    afterEach(() => {
+      productsModel.getByNameProducts.restore();
+      productsModel.addProducts.restore();
+    });
+
+    it("retorna um objeto", async () => {
+      const [response] = await productsService.getNewProduct(name, quantity);
+      expect(response[0]).to.be.a("object");
+    });
+
+    it('tal objeto possui as propriedades: "id", "name" e "quantity"', async () => {
+      const [response] = await productsService.getNewProduct(name, quantity);
+      expect(response[0]).to.include.all.keys(
+        'id',
+        'name',
+        'quantity',
+      );
+    });
+  });
+
+  describe('Quando não é inserido com sucesso', () => {
+
+    const name = "Martelo de Thor";
+
+    beforeEach(() => {
+      const resultExecute = [[{id: 1, name: "Martelo de Thor", quantity: 10}]];
+      sinon.stub(productsModel, 'getByNameProducts').resolves(resultExecute);
+    });
+  
+    afterEach(() => {
+      productsModel.getByNameProducts.restore();
+    });
+
+    it("retorna nulo", async () => {
+      const response = await productsService.getNewProduct(name);
+      expect(response).to.be.null;
+    });
+  });
+})
+
+describe('Atualiza produto no Banco de dados', () => {
+  const name = "Example Product A";
+  const quantity = 6;
+  const id = 4
+
+  describe('Quando é atualizado com sucesso',() => {
+    beforeEach(() => {
+      const result = [];
+      const resultExecute = [1];
+      sinon.stub(productsModel, 'getByNameProducts').resolves(result);
+      sinon.stub(productsModel, 'updateProducts').resolves(resultExecute);
+    });
+  
+    afterEach(() => {
+      productsModel.getByNameProducts.restore();
+      productsModel.updateProducts.restore();
+    });
+
+    it('retorna um número', async () => {
+      const [response] = await productsService.updateProductService(name, quantity, id);
+      expect(response).to.be.a("number");
+    });
+    
+    it('tal número é igaul a 1', async () => {
+      const [response] = await productsService.updateProductService(name, quantity, id);
+      expect(response).to.be.equal(1);
+    });
+  });
+
+  describe('Quando não é atualizado com sucesso',() => {
+    const name = "Martelo de Thor";
+
+    beforeEach(() => {
+      const resultExecute = [[{id: 1, name: "Martelo de Thor", quantity: 10}]];
+      sinon.stub(productsModel, 'getByNameProducts').resolves(resultExecute);
+    });
+  
+    afterEach(() => {
+      productsModel.getByNameProducts.restore();
+    });
+
+    it("retorna nulo", async () => {
+      const response = await productsService.getNewProduct(name);
+      expect(response).to.be.null;
+    });
+  });
+});
   
 
