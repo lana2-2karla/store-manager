@@ -1,12 +1,12 @@
 const connection = require('./connection');
 
-const getAllProducts = () => {
-    const allProducts = connection.execute('SELECT * FROM StoreManager.products;');
+const getAllProducts = async () => {
+    const allProducts = await connection.execute('SELECT * FROM StoreManager.products;');
     return allProducts;
 };
 
-const getByIdProducts = (id) => {
-   const productFilterId = connection
+const getByIdProducts = async (id) => {
+   const productFilterId = await connection
    .execute('SELECT * FROM StoreManager.products WHERE id = ?', [id]);
    return productFilterId;
 };
@@ -34,6 +34,7 @@ const updateProducts = async (name, quantity, id) => {
     const [rows] = await connection
     .execute('UPDATE StoreManager.products SET name = ?, quantity = ? WHERE id = ?', 
     [name, quantity, id]);
+    console.log(rows.affectedRows);
     return rows.affectedRows;
 };
 

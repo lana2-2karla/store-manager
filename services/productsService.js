@@ -1,9 +1,7 @@
 const productsModel = require('../models/productsModel');
 
 const getAllProducts = (id = null) => {
-    if (id) {
-        return productsModel.getByIdProducts(id);
-    }
+    if (id) return productsModel.getByIdProducts(id);
     return productsModel.getAllProducts();
 };
 
