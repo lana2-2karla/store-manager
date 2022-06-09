@@ -6,12 +6,13 @@ const salesModel = require("../../../models/salesModel");
 describe('Busca todas as vendas do Banco de dados', () => {
 
   describe('Quando não há vendas a serem listadas', () => {
-    before(() => {
+
+    beforeEach(() => {
       const resultExecute = [[]];
       sinon.stub(connection, 'execute').resolves(resultExecute);
     });
   
-    after(() => {
+    afterEach(() => {
       connection.execute.restore();
       });
 
@@ -27,7 +28,8 @@ describe('Busca todas as vendas do Banco de dados', () => {
 })
 
   describe('Quando há vendas a serem listadas', () => {
-    before(() => {
+
+    beforeEach(() => {
       const resultExecute = [[
         {
           saleId: 1,
@@ -51,7 +53,7 @@ describe('Busca todas as vendas do Banco de dados', () => {
       sinon.stub(connection, 'execute').resolves(resultExecute);
     });
         
-    after(() => {
+    afterEach(() => {
       connection.execute.restore();
     });
 
@@ -83,12 +85,12 @@ describe('Insere nova venda de produtos no Banco de dados', () => {
   const productId = 2;
   const quantity = 6;
   
-  before(() => {
+  beforeEach(() => {
     const resultExecute = [{insertId: 1}];
     sinon.stub(connection, 'execute').resolves(resultExecute);
   });
   
-  after(() => {
+  afterEach(() => {
     connection.execute.restore();
   });
   
@@ -116,12 +118,12 @@ describe('Atualiza venda no Banco de dados', () => {
     const productId = 2;
     const quantity = 6;
 
-  before(() => {
+  beforeEach(() => {
     const resultExecute = [{ affectedRows: 1}];
     sinon.stub(connection, 'execute').resolves(resultExecute);
   });
   
-  after(() => {
+  afterEach(() => {
     connection.execute.restore();
   });
 

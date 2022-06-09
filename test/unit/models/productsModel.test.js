@@ -6,12 +6,13 @@ const productsModel = require("../../../models/productsModel");
 describe('Busca todos os produtos do Banco de dados', () => {
 
   describe('Quando não há produtos a serem listados', () => {
-    before(() => {
+
+    beforeEach(() => {
       const resultExecute = [[]];
       sinon.stub(connection, 'execute').resolves(resultExecute);
     });
   
-    after(() => {
+    afterEach(() => {
       connection.execute.restore();
       });
 
@@ -27,7 +28,8 @@ describe('Busca todos os produtos do Banco de dados', () => {
 })
 
   describe('Quando há produtos a serem listados', () => {
-    before(() => {
+
+    beforeEach(() => {
       const resultExecute = [[
         {id: 1, name: "Martelo de Thor", quantity: 10},
         {id: 2, name: "Traje de encolhimento", quantity: 20},
@@ -36,7 +38,7 @@ describe('Busca todos os produtos do Banco de dados', () => {
       sinon.stub(connection, 'execute').resolves(resultExecute);
     });
         
-    after(() => {
+    afterEach(() => {
       connection.execute.restore();
     });
 
@@ -67,12 +69,12 @@ describe('Insere novo produto no Banco de dados', () => {
   const name = "Example Product A";
   const quantity = 6;
 
-  before(() => {
+  beforeEach(() => {
     const resultExecute = [{id: 1, name: "Example Product A", quantity: 6}];
     sinon.stub(connection, 'execute').resolves(resultExecute);
   });
   
-  after(() => {
+  afterEach(() => {
     connection.execute.restore();
   });
   
@@ -101,12 +103,12 @@ describe('Atualiza produto no Banco de dados', () => {
   const quantity = 6;
   const id = 4
 
-  before(() => {
+  beforeEach(() => {
     const resultExecute = [{ affectedRows: 1}];
     sinon.stub(connection, 'execute').resolves(resultExecute);
   });
   
-  after(() => {
+  afterEach(() => {
     connection.execute.restore();
   });
 
